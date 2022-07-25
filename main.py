@@ -9,48 +9,40 @@ import get_data
 
 app = Flask(__name__)
 
-
 @app.route('/api/userdata', methods=['GET'])
 def index():
     user = request.args.get('user')
     type = request.args.get('type')
-    lang = request.args.get('lang')
 
     formData = {
         "licstatus": "active",
         "searchbyoption": "byname",
-        "searchlang": f"{lang}",
         "entityType": f"{type}",
         "searchtext": f"{user}",
-        # "page": "1",
-        # "start": "0",
-        # "limit": "20"
     }
 
+    # 需求params加上現在秒數
     base_url = "https://apps.sfc.hk/publicregWeb/searchByNameJson"
     today_ms = str(round(time.time() * 1000))
 
     payload = {
         "licstatus": formData['licstatus'],
         "searchbyoption": formData['searchbyoption'],
-        "searchlang": formData['searchlang'],
         "entityType": formData['entityType'],
         "searchtext": formData["searchtext"],
+        "searchlang": "tc",
     }
 
     res = requests.post(base_url, params={"_dc": today_ms}, data=payload)
-    soup = BeautifulSoup(res.content, "lxml")
-    result = soup.find("p")
-    r_dict = json.loads(result.text)
-    user_number = r_dict['items'][0]['ceref']
+    user_number = json.loads(res.text)['items'][0]['ceref'] # 取回中央編號
 
-    x = get_data.User(user_number)
+    data_func = get_data.User(user_number)
 
-    details = x.get_details()
-    address = x.get_address()
-    conditions = x.get_conditions()
-    disciplinaryAction = x.get_disciplinaryAction()
-    licenceRecord = x.get_licenceRecord()
+    details = data_func.get_details() # 取回牌照詳情
+    address = data_func.get_address() # 取回營業地址
+    conditions = data_func.get_conditions() # 取回條件
+    disciplinaryAction = data_func.get_disciplinaryAction() # 取回公開紀律紀錄
+    licenceRecord = data_func.get_licenceRecord() # 取回牌照紀錄
     data = {
         "data": {
             "details": details,
