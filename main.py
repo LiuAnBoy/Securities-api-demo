@@ -43,6 +43,7 @@ def index():
     conditions = data_func.get_conditions() # 取回條件
     disciplinaryAction = data_func.get_disciplinaryAction() # 取回公開紀律紀錄
     licenceRecord = data_func.get_licenceRecord() # 取回牌照紀錄
+    
     data = {
         "data": {
             "details": details,

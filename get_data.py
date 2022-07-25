@@ -23,7 +23,7 @@ class User:
             if (jsonStr == ''):
                 return None
             else:
-                data = json.loads(jsonStr)
+                data = json.loads(jsonStr) # string convert list
         return data
 
     def get_address(self):
@@ -39,7 +39,7 @@ class User:
             if (jsonStr == ''):
                 return None
             else:
-                data = json.loads(jsonStr)
+                data = json.loads(jsonStr) # string convert list
         return data
 
     def get_conditions(self):
@@ -55,7 +55,7 @@ class User:
             if (jsonStr == ''):
                 return None
             else:
-                data = json.loads(jsonStr)
+                data = json.loads(jsonStr) # string convert list
         return data
 
     def get_disciplinaryAction(self):
@@ -71,7 +71,7 @@ class User:
             if (jsonStr == ''):
                 return None
             else:
-                data = json.loads(jsonStr)
+                data = json.loads(jsonStr) # string convert list
         return data
 
     def get_licenceRecord(self):
@@ -87,5 +87,5 @@ class User:
             if (jsonStr == ''):
                 return None
             else:
-                data = json.loads(jsonStr)
+                data = json.loads(jsonStr) # string convert list
         return data
